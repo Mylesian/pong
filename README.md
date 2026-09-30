@@ -1,8 +1,8 @@
 # TODO
 
-- [x] Screen that displays a track
-    - [x] points, draw a line (of arbitrary thickness idk) between each point
-- [x] Enemies (different sized circles? different sized/shaped objects? different colored circles?) that travel along said track
+- Screen that displays a track
+    - points, draw a line (of arbitrary thickness idk) between each point
+- Enemies (different sized circles? different sized/shaped objects? different colored circles?) that travel along said track
     - stages are defined by their tracks
     - probably only make 1-2 stages
 - Waves of enemies

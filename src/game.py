@@ -1,6 +1,6 @@
 import pygame
 import level.stage as stage
-from util.timer import Timer
+import asyncio
 from util.constants import (
     GAME_FONT,
     FONT_X_OFFSET,
@@ -33,7 +33,7 @@ class Game:
     def lose(this):
         pass
     
-    def run(this, screen: pygame.Surface):
+    async def run(this, screen: pygame.Surface):
         clock = pygame.time.Clock()
         
         running = True
@@ -59,3 +59,6 @@ class Game:
               
             pygame.display.flip()
             clock.tick(FPS)
+            await asyncio.sleep(0)
+        
+        pygame.quit()

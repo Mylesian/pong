@@ -1,5 +1,6 @@
+# timer class that updates an optional dependent when it hits 0
 class Timer:
-    def __init__(this, time: float, start_max: bool, dependent: 'Dependent'):
+    def __init__(this, time: float, start_max: bool, dependent: 'Dependent' = None):
         this.dependent = dependent
         
         this.default_time = time
@@ -24,6 +25,8 @@ class Timer:
         else:
             this.time = time
 
+# dependent for a timer class that creates a timer to append to the list its passed
+# override update() to do things
 class Dependent:
     def __init__(this, time: int, timer_list: list[Timer]):
         depends_on = Timer(time, True)

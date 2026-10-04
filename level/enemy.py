@@ -2,11 +2,12 @@ import pygame
 import level.track as track
 import util.timer
 from util.constants import (
-    ENEMY_BASE_SPEED,
-    ENEMY_IMAGE_1HP,
-    ENEMY_IMAGE_2HP
+    enemy_constants as e
 )
 
+# spawns after its timer goes down
+# goes along the track
+# different pictures for different hp
 class Enemy(util.timer.Dependent):
     def __init__(this, max_hp: int, path: track.Track,  dest: list['Enemy']):
         this.max_hp = max_hp
@@ -30,19 +31,21 @@ class Enemy(util.timer.Dependent):
             
             this.set_velocity()
             
+        if this.hp <= 0: return False
+
         this.pos += this.velocity
         return True
         
     def set_velocity(this):
         vel = this.path.points[this.target_pos] - this.pos
-        this.velocity = vel / vel.magnitude() * ENEMY_BASE_SPEED * this.hp
+        this.velocity = vel / vel.magnitude() * e.ENEMY_BASE_SPEED * this.hp
         
     def set_image(this):
         match this.hp:
             case 1:
-                this.image = ENEMY_IMAGE_1HP
+                this.image = e.ENEMY_IMAGE_1HP
             case 2:
-                this.image = ENEMY_IMAGE_2HP
+                this.image = e.ENEMY_IMAGE_2HP
     
     def update(this):
         this.dest.append(this)

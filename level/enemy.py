@@ -37,8 +37,9 @@ class Enemy(util.timer.Dependent):
         return True
         
     def set_velocity(this):
-        vel = this.path.points[this.target_pos] - this.pos
-        this.velocity = vel / vel.magnitude() * e.ENEMY_BASE_SPEED * this.hp
+        if this.hp > 0:
+            vel = this.path.points[this.target_pos] - this.pos
+            this.velocity = vel / vel.magnitude() * e.ENEMY_BASE_SPEED * this.hp
         
     def set_image(this):
         match this.hp:

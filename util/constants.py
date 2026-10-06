@@ -20,22 +20,9 @@ class screen_constants:
     QUIT_BGCOLOR = (255, 255, 255)
     QUIT_TXTCOLOR = (0, 0, 0)
 
-class stage_constants:
-    STAGE_DIMENSIONS = (1200, 760)
-    STAGE_COLOR = (25, 25, 25)
-    TRACK_COLOR = (0, 255, 0)
-    TRACK_THICKNESS = 5
-
-class enemy_constants:
-    ENEMY_RADIUS = 20
-    ENEMY_BASE_SPEED = 1
-    ENEMY_IMAGE_1HP = pygame.transform.scale(pygame.image.load('assets/enemy_1hp.png').convert_alpha(),
-                                             (2 * ENEMY_RADIUS, 2 * ENEMY_RADIUS))
-    ENEMY_IMAGE_2HP = pygame.transform.scale(pygame.image.load('assets/enemy_2hp.png').convert_alpha(),
-                                             (2 * ENEMY_RADIUS, 2 * ENEMY_RADIUS))
-
 class player_constants:
     PLAYER_MAX_HP = 100
+    START_MONEY = 100
     TOWER_RADIUS = 35
     BASE_TOWER_IMAGE = pygame.transform.scale(pygame.image.load('assets/base_tower.png').convert_alpha(),
                                               (2 * TOWER_RADIUS, 2 * TOWER_RADIUS))
@@ -49,3 +36,24 @@ class projectile_constants:
     PROJECTILE_RADIUS = 3
     PROJECTILE_IMAGE = pygame.transform.scale(pygame.image.load('assets/projectile.png').convert_alpha(),
                                               (2 * PROJECTILE_RADIUS, 2 * PROJECTILE_RADIUS))
+
+class stage_constants:
+    STAGE_DIMENSIONS = (1200, 760)
+    STAGE_COLOR = (25, 25, 25)
+    TRACK_COLOR = (0, 255, 0)
+    TRACK_THICKNESS = 5
+    SHOP_BGCOLOR = (50, 50, 50)
+    SHOP_WIDTH = player_constants.TOWER_RADIUS * 2
+    BASE_WAVE_MONEY_GAIN = 100
+    WAVE_MONEY_INCREMENT = 50
+    WAVE_BUTTON_WIDTH = 60
+    WAVE_BUTTON_IMAGE = pygame.transform.scale(pygame.image.load('assets/next_wave_button.png').convert_alpha(),
+                                               (WAVE_BUTTON_WIDTH, WAVE_BUTTON_WIDTH))
+
+class enemy_constants:
+    ENEMY_RADIUS = 20
+    ENEMY_BASE_SPEED = 1
+    ENEMY_IMAGE_1HP = pygame.transform.scale(pygame.image.load('assets/enemy_1hp.png').convert_alpha(),
+                                             (2 * ENEMY_RADIUS, 2 * ENEMY_RADIUS))
+    ENEMY_IMAGE_2HP = pygame.transform.scale(pygame.image.load('assets/enemy_2hp.png').convert_alpha(),
+                                             (2 * ENEMY_RADIUS, 2 * ENEMY_RADIUS))

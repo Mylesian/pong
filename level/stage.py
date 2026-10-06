@@ -1,9 +1,15 @@
 import pygame
-import level.track as track
+from level import (
+    track as tr,
+    enemy as e
+)
 import util.timer
-from tower import tower
-from level.enemy import Enemy
+import util.button as button
+from tower import (
+    tower_base
+)
 from util.constants import (
+    screen_constants as sc,
     data_constants as dat,
     stage_constants as stage,
     enemy_constants as enemy,
@@ -12,39 +18,54 @@ from util.constants import (
 )
 
 # just wave initializing things
-# might be a good idea to make a wave class to store it all during runtime?
 spawn_timer_offset: float = 0
 with open(dat.WAVES_DATA_PATH) as waves:
-    wave_data: list[str] = waves.read().split('|')
+    wave_data: list[str] = waves.read().split('\n')
 
 # class to hold all the info about the currently displayed stage
 class Stage(pygame.Surface):
     def __init__(this, info):
         super().__init__(stage.STAGE_DIMENSIONS)
         
-        this.path = track.Track(set_points(info.split('|')))
-        this.enemies: list[Enemy] = []
-        this.active_timers: list[util.timer.Timer] = []
-        this.projectiles: list[tower.Projectile] = []
-        this.towers: list[tower.Tower] = []
+        this.current_hp = p.PLAYER_MAX_HP
+        this.current_money = p.START_MONEY
         
-        this.make_enemies(wave_data)
+        this.path = tr.Track(set_points(info.split('|')))
+        this.enemies: list[e.Enemy] = []
+        this.enemy_timers: list[util.timer.Timer] = []
+        this.projectiles: list[tower_base.Projectile] = []
+        this.towers: list[tower_base.Tower] = []
         
-        this.towers.append(tower.Tower(this, pygame.math.Vector2(pygame.mouse.get_pos())))
+        this.waves = []
+        for w in wave_data:
+            this.waves.append(w.split('|'))
+        
+        this.current_wave = 0
+        this.wave_in_progress = False
+        
+        def next_wave():
+            global spawn_timer_offset
+            spawn_timer_offset = 0
+            if this.current_wave < this.waves.__len__():
+                this.wave_in_progress = True
+                this.make_enemies(this.waves[this.current_wave])
+        this.next_wave_button = button.Button((this.get_width() - stage.WAVE_BUTTON_WIDTH, 0, stage.WAVE_BUTTON_WIDTH, stage.WAVE_BUTTON_WIDTH),
+                                              stage.WAVE_BUTTON_IMAGE,
+                                              next_wave)
         
     # the bulk of the actual frame logic
     # updates all the enemies, timers, projectiles, towers
     # returns itself to be drawn to the screen in the game object
-    def update(this, game, mouse_down: bool, dt: float) -> 'Stage':
+    def update(this, mouse_just_down: bool, dt: float) -> 'Stage':
         this.fill(stage.STAGE_COLOR)
         this.path.draw(this)
         
-        for t in this.active_timers[:]:
+        for t in this.enemy_timers[:]:
             if t.countdown(dt):
-                this.active_timers.remove(t)
+                this.enemy_timers.remove(t)
         
         for t in this.towers:
-            t.update(dt, this.enemies, mouse_down)
+            t.update(dt, this.enemies, mouse_just_down)
             this.blit(t.image, t.pos - (p.TOWER_RADIUS, p.TOWER_RADIUS))
         
         for proj in this.projectiles[:]:
@@ -55,12 +76,34 @@ class Stage(pygame.Surface):
         for e in this.enemies[:]:
             if not e.move_along_track():
                 this.enemies.remove(e)
-                game.current_hp -= e.hp
+                this.current_hp -= e.hp
             this.blit(e.image, e.pos - (enemy.ENEMY_RADIUS, enemy.ENEMY_RADIUS))
+
+        if not this.wave_in_progress:
+            this.next_wave_button.update(mouse_just_down)
+            this.next_wave_button.draw(this)
+        elif this.enemy_timers.__len__() == 0 and this.enemies.__len__() == 0:
+            this.wave_in_progress = False
+            this.current_money += stage.BASE_WAVE_MONEY_GAIN + this.current_wave * stage.WAVE_MONEY_INCREMENT
+            this.current_wave += 1
+            
+            if this.current_wave == this.waves.__len__():
+                this.win()
+        
+        if this.current_hp <= 0:
+            this.lose()
+        
         
         return this
     
+    # do nothing yet, will run the win/loss sequence when someone makes it
+    def win(this):
+        pass
+    def lose(this):
+        pass
+    
     def make_enemies(this, info: list[str]):
+        this.wave_start = True
         global spawn_timer_offset
         for group in info:
             group_info = group.split(',')
@@ -69,10 +112,17 @@ class Stage(pygame.Surface):
             for i in range(int(group_info[1])):
                 spawn_delay = float(group_info[3])
                 
-                e = Enemy(int(group_info[2]), this.path, this.enemies)
-                this.active_timers.append(util.timer.Timer(spawn_timer_offset + spawn_delay, True, e))
+                en = e.Enemy(int(group_info[2]), this.path, this.enemies)
+                this.enemy_timers.append(util.timer.Timer(spawn_timer_offset + spawn_delay, True, en))
                 
                 spawn_timer_offset += spawn_delay
+                
+    # get surfaces with player info to write to the screen
+    def get_info_block(this) -> pygame.Surface:
+        hp_block = sc.GAME_FONT.render(f'{this.current_hp}', False, sc.HEALTH_FONT_COLOR)
+        money_block = sc.GAME_FONT.render(f'{this.current_money}', False, sc.MONEY_FONT_COLOR)
+        
+        return hp_block, money_block
     
 def set_points(info: list[str]) -> list[tuple]:
     points: list[tuple] = []

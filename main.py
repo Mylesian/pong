@@ -1,12 +1,10 @@
 import pygame
-from pygame._sdl2 import Window
 import asyncio
 
 # init this stuff here before importing the rest so pygame & screen are imported for images in util.constants
-screen_size = (1200, 760)
+screen_size = (1400, 760)
 pygame.init()
 screen = pygame.display.set_mode((screen_size[0], screen_size[1] - 30), pygame.RESIZABLE)
-Window.from_display_module().maximize()
 pygame.display.set_caption('Pong')
 
 import game as g

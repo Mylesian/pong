@@ -22,11 +22,11 @@ class Tower:
     def place(this):
         this.state = play.PLACED
     
-    def update(this, dt: float, enemies: list[enemy.Enemy], mouse_down: bool):
+    def update(this, dt: float, enemies: list[enemy.Enemy], mouse_just_down: bool):
         match this.state:
             case play.NOT_PLACED:
                 this.pos = pygame.math.Vector2(pygame.mouse.get_pos())
-                if mouse_down:
+                if mouse_just_down == True:
                     this.state = play.PLACED
             case play.PLACED:
                 this.shot_logic(dt, enemies)

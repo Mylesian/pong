@@ -6,6 +6,7 @@ from util.constants import (
 class BaseTower(Tower):
     image = play.BASE_TOWER_IMAGE
     base_price = 70
+    base_shot_cd = 0.7
     
     def __init__(this, stage):
-        super().__init__(stage, 0.5, BaseTower.image)
+        super().__init__(stage, BaseTower.base_shot_cd, BaseTower.image)

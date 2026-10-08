@@ -17,8 +17,8 @@ class screen_constants:
     MONEY_FONT_COLOR = (255, 228, 0)
     MONEY_Y_OFFSET = GAME_FONT.get_height()
     COIN_IMAGE = pygame.transform.scale(pygame.image.load('assets/coin.png').convert_alpha(), (GAME_FONT.get_height(), GAME_FONT.get_height()))
-    QUIT_BGCOLOR = (255, 255, 255)
-    QUIT_TXTCOLOR = (0, 0, 0)
+    END_SCREEN_BG_DIM = (50, 50, 50)
+    UI_FONT_COLOR = (255, 255, 255)
 
 class player_constants:
     PLAYER_MAX_HP = 100
@@ -33,7 +33,7 @@ class player_constants:
 
 class projectile_constants:
     PROJECTILE_SPEED = 10
-    PROJECTILE_RADIUS = 3
+    PROJECTILE_RADIUS = 5
     PROJECTILE_IMAGE = pygame.transform.scale(pygame.image.load('assets/projectile.png').convert_alpha(),
                                               (2 * PROJECTILE_RADIUS, 2 * PROJECTILE_RADIUS))
 
@@ -46,13 +46,15 @@ class stage_constants:
     SHOP_WIDTH = player_constants.TOWER_RADIUS * 2
     BASE_WAVE_MONEY_GAIN = 100
     WAVE_MONEY_INCREMENT = 50
-    WAVE_BUTTON_WIDTH = 60
+    UI_BUTTON_WIDTH = 60
     WAVE_BUTTON_IMAGE = pygame.transform.scale(pygame.image.load('assets/next_wave_button.png').convert_alpha(),
-                                               (WAVE_BUTTON_WIDTH, WAVE_BUTTON_WIDTH))
+                                               (UI_BUTTON_WIDTH, UI_BUTTON_WIDTH))
+    RESTART_BUTTON_IMAGE = pygame.transform.scale(pygame.image.load('assets/restart_button.png').convert_alpha(),
+                                                  (UI_BUTTON_WIDTH, UI_BUTTON_WIDTH))
 
 class enemy_constants:
     ENEMY_RADIUS = 20
-    ENEMY_BASE_SPEED = 1
+    ENEMY_BASE_SPEED = 3
     ENEMY_IMAGE_1HP = pygame.transform.scale(pygame.image.load('assets/enemy_1hp.png').convert_alpha(),
                                              (2 * ENEMY_RADIUS, 2 * ENEMY_RADIUS))
     ENEMY_IMAGE_2HP = pygame.transform.scale(pygame.image.load('assets/enemy_2hp.png').convert_alpha(),

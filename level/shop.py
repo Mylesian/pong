@@ -15,9 +15,11 @@ class Shop(pygame.Surface):
         
         this.itemlist: list[ShopElement] = []
         y_offset = 0
+        x_offset = 5
         for name, cls in inspect.getmembers(tower_types, inspect.isclass):
             if cls in tower_base.Tower.__subclasses__():
-                this.itemlist.append(ShopElement(stage, pygame.math.Vector2(0, y_offset), cls))
+                this.itemlist.append(ShopElement(stage, pygame.math.Vector2(x_offset, y_offset), cls))
+                y_offset += play.TOWER_RADIUS * 2 + st.SHOP_WIDTH / 2
                 y_offset += st.SHOP_WIDTH / 2
     
     def draw(this) -> 'Shop':

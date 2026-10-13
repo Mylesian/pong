@@ -16,9 +16,10 @@ class screen_constants:
     HEALTH_FONT_COLOR = (200, 0, 0)
     MONEY_FONT_COLOR = (255, 228, 0)
     MONEY_Y_OFFSET = GAME_FONT.get_height()
+    BACKGROUND_IMAGE = pygame.transform.scale(pygame.image.load('assets/background.png').convert_alpha(), (1200, 760))
     COIN_IMAGE = pygame.transform.scale(pygame.image.load('assets/coin.png').convert_alpha(), (GAME_FONT.get_height(), GAME_FONT.get_height()))
-    QUIT_BGCOLOR = (255, 255, 255)
-    QUIT_TXTCOLOR = (0, 0, 0)
+    END_SCREEN_BG_DIM = (50, 50, 50)
+    UI_FONT_COLOR = (255, 255, 255)
 
 class player_constants:
     PLAYER_MAX_HP = 100
@@ -26,6 +27,10 @@ class player_constants:
     TOWER_RADIUS = 35
     BASE_TOWER_IMAGE = pygame.transform.scale(pygame.image.load('assets/base_tower.png').convert_alpha(),
                                               (2 * TOWER_RADIUS, 2 * TOWER_RADIUS))
+    REIN_TOWER_IMAGE = pygame.transform.scale(pygame.image.load('assets/rein_tower.png').convert_alpha(),
+                                              (2 * TOWER_RADIUS, 2 * TOWER_RADIUS))
+    WIZ_TOWER_IMAGE = pygame.transform.scale(pygame.image.load('assets/wiz_tower.png').convert_alpha(),
+                                                  (2 * TOWER_RADIUS, 2 * TOWER_RADIUS))
     TOWER_VIEW_RADIUS = 100
     TOWER_VIEW_RADIUS_SQUARED = TOWER_VIEW_RADIUS ** 2
     NOT_PLACED = 0
@@ -33,26 +38,33 @@ class player_constants:
 
 class projectile_constants:
     PROJECTILE_SPEED = 10
-    PROJECTILE_RADIUS = 3
-    PROJECTILE_IMAGE = pygame.transform.scale(pygame.image.load('assets/projectile.png').convert_alpha(),
+    PROJECTILE_RADIUS = 5
+    SPIN_SPEED = 5
+    BASE_IMAGE = pygame.transform.scale(pygame.image.load('assets/projectile.png').convert_alpha(),
                                               (2 * PROJECTILE_RADIUS, 2 * PROJECTILE_RADIUS))
+    REIN_IMAGE = pygame.transform.scale(pygame.image.load('assets/boomerang.png').convert_alpha(),
+                                                  (6 * PROJECTILE_RADIUS, 6 * PROJECTILE_RADIUS))
+    WIZ_IMAGE = pygame.transform.scale(pygame.image.load('assets/wiz_ball.png').convert_alpha(),
+                                                  (3 * PROJECTILE_RADIUS, 3 * PROJECTILE_RADIUS))
 
 class stage_constants:
     STAGE_DIMENSIONS = (1200, 760)
     STAGE_COLOR = (25, 25, 25)
-    TRACK_COLOR = (0, 255, 0)
+    TRACK_COLOR = (0, 0, 0, 0.1)
     TRACK_THICKNESS = 5
     SHOP_BGCOLOR = (50, 50, 50)
     SHOP_WIDTH = player_constants.TOWER_RADIUS * 2
     BASE_WAVE_MONEY_GAIN = 100
     WAVE_MONEY_INCREMENT = 50
-    WAVE_BUTTON_WIDTH = 60
+    UI_BUTTON_WIDTH = 60
     WAVE_BUTTON_IMAGE = pygame.transform.scale(pygame.image.load('assets/next_wave_button.png').convert_alpha(),
-                                               (WAVE_BUTTON_WIDTH, WAVE_BUTTON_WIDTH))
+                                               (UI_BUTTON_WIDTH, UI_BUTTON_WIDTH))
+    RESTART_BUTTON_IMAGE = pygame.transform.scale(pygame.image.load('assets/restart_button.png').convert_alpha(),
+                                                  (UI_BUTTON_WIDTH, UI_BUTTON_WIDTH))
 
 class enemy_constants:
     ENEMY_RADIUS = 20
-    ENEMY_BASE_SPEED = 1
+    ENEMY_BASE_SPEED = 3
     ENEMY_IMAGE_1HP = pygame.transform.scale(pygame.image.load('assets/enemy_1hp.png').convert_alpha(),
                                              (2 * ENEMY_RADIUS, 2 * ENEMY_RADIUS))
     ENEMY_IMAGE_2HP = pygame.transform.scale(pygame.image.load('assets/enemy_2hp.png').convert_alpha(),

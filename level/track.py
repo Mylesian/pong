@@ -12,5 +12,6 @@ class Track:
             this.points.append(pygame.math.Vector2(pt[0], pt[1]))
     
     def draw(this, screen: pygame.Surface):
-        for i in range(this.points.__len__() - 1):
-            pygame.draw.line(screen, stage.TRACK_COLOR, this.points[i], this.points[i+1], stage.TRACK_THICKNESS)
+        return
+        # for i in range(this.points.__len__() - 1):
+        #     pygame.draw.line(screen, stage.TRACK_COLOR, this.points[i], this.points[i+1], stage.TRACK_THICKNESS)

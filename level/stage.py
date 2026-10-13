@@ -63,7 +63,7 @@ class Stage(pygame.Surface):
     # updates all the enemies, timers, projectiles, towers
     # returns itself to be drawn to the screen in the game object
     def update(this, mouse_just_down: bool, dt: float) -> 'Stage':
-        this.fill(stage.STAGE_COLOR)
+        this.blit(sc.BACKGROUND_IMAGE, (0,0))
         this.path.draw(this)
         
         if not this.end_screen:
